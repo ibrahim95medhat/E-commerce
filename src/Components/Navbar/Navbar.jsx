@@ -15,7 +15,7 @@ export default function Navbar() {
   }
   return (
     <>
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+    <nav className="navbar navbar-expand-lg navbar-light bg-light p-3">
   <div className="container">
     <Link className="navbar-brand" to="">
       <img src={logo} alt='logo'></img>
@@ -27,11 +27,11 @@ export default function Navbar() {
       {
         isUserLoggedIn ? 
        <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-       <li className="nav-item">
-         <Link className="nav-link active" aria-current="page" to="home">Home</Link>
+       <li className="nav-item ">
+         <Link className="nav-link active d-inline-block" aria-current="page" to="home">Home</Link>
        </li>
        <li className="nav-item">
-         <Link className="nav-link position-relative" to="cart">Cart
+         <Link className="nav-link position-relative d-inline-block" to="cart">Cart
          <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
         {cartNumOfItems}
       <span className="visually-hidden">unread messages</span>
@@ -39,19 +39,19 @@ export default function Navbar() {
          </Link>
        </li>
        <li className="nav-item">
-         <Link className="nav-link" to="products">products</Link>
+         <Link className="nav-link d-inline-block" to="products">products</Link>
        </li>
        <li className="nav-item">
-         <Link className="nav-link" to="categories">Categories</Link>
+         <Link className="nav-link d-inline-block" to="categories">Categories</Link>
        </li>
        <li className="nav-item">
-         <Link className="nav-link" to="brands">Brands</Link>
+         <Link className="nav-link d-inline-block" to="brands">Brands</Link>
        </li>
        <li className="nav-item">
-         <Link className="nav-link" to="allorders">All Orders</Link>
+         <Link className="nav-link d-inline-block" to="allorders">All Orders</Link>
        </li>
        <li className="nav-item">
-         <Link className="nav-link" to="wishlist">WishList</Link>
+         <Link className="nav-link d-inline-block" to="wishlist">WishList</Link>
        </li>
        
        
@@ -76,9 +76,15 @@ export default function Navbar() {
         </li>
         </>: null}
          {
-          isUserLoggedIn?<li className="nav-item">
+          isUserLoggedIn?<><li className="nav-item">
           <span style={{cursor:'pointer'}} onClick={logout}>Logout</span>
-        </li>:null
+        </li>
+
+        {/* <li><i class="fa-solid  fa-cart-shopping position-relative"><span className="position-absolute top-0 start-100 translate-middle  badge rounded-pill bg-danger">
+        {cartNumOfItems}
+      <span className="visually-hidden">unread messages</span>
+      </span></i></li> */}
+        </>:null
          }
         
       </ul>

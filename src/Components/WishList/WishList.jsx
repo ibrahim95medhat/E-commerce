@@ -61,13 +61,13 @@ if(wishlistproduct===null){
 
           {
             wishlistproduct?.map((e,index)=>{
-              return <div className="col-12 col-md-3" key={index}>
+              return <div className="product col-12 col-md-3 p-3" key={index}>
                <div className="image-container"><img className='w-100' src={e.imageCover} alt='pic'></img></div>
         <h5>{e.category.name}</h5>
         <h6>{e.title.split(" ").splice(0,2).join(" ")+'...'}</h6>
         <div className='d-flex justify-content-between'>
         <p>{e.price}EGP</p>
-        <p><i className="fa-solid fa-star"></i>{e.ratingsAverage}</p>
+        <p><i className="fa-solid fa-star rating-color"></i>{e.ratingsAverage}</p>
         </div>
         <button   onClick={()=>{addingProductToCart(e.id)}} className='btn btn-success w-100'>+ add to cart </button>
               </div>
