@@ -19,6 +19,7 @@ import {Toaster} from 'react-hot-toast';
 import Payment from './Components/Payment/Payment.jsx';
 import AllOrders from './Components/AllOrders/AllOrders';
 import {Offline} from 'react-detect-offline'
+import WishList from './Components/WishList/WishList';
 let routers=createHashRouter([
   
   {path:'' , element:<Layout/> , children:[
@@ -30,7 +31,8 @@ let routers=createHashRouter([
   {path:'products/:id', element:<ProtectedRoute><ProductDetails/></ProtectedRoute>},
   {path:'register', element:<Register/>},
   {path:'payment', element:<Payment/>},
-  {path:'allorders', element:<AllOrders/>},
+  {path:'allorders', element:<ProtectedRoute><AllOrders/></ProtectedRoute>},
+  {path:'wishlist', element:<ProtectedRoute><WishList/></ProtectedRoute>},
   {path:'login', element:<Login/>},
   {path:'brands', element:<ProtectedRoute><Brands/></ProtectedRoute>},
  

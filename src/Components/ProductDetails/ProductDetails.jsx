@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState,useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
@@ -12,6 +12,8 @@ const{id}=useParams();
 console.log(id)
 
 const[isSending,setIsSending]=useState(false);
+const[wishListProduct,setWishListProduct]=useState(null)
+const {removeFromWishList,addToWhishList,gettingWishList}=useContext(addToCartContext)
 
 async function addingProduct(id){
 
@@ -27,6 +29,36 @@ function getProductDetails(){
   return axios.get(`https://ecommerce.routemisr.com/api/v1/products/${id}`)
 }
 
+function togglingWishList(id,e){
+  e.target.classList.contains('fa-solid') ? removingFromWishList(id) : addingToWishList(id)
+  
+  }
+
+  async function removingFromWishList(id){
+    const data=await removeFromWishList(id)
+    
+    toast(data.message)
+     getWishList()
+   }
+   async function addingToWishList(id){
+     
+   
+   const data=await addToWhishList(id)
+   
+       toast(data.message)
+       getWishList()
+     
+   }
+   async function getWishList(){
+
+    const{data}= await gettingWishList()
+  setWishListProduct(data)
+  console.log(wishListProduct)
+  }
+  
+  useEffect(()=>{
+    getWishList()
+  },[])
 
 const {data,isLoading}=useQuery(['getSpecificProduct'],getProductDetails);
 
@@ -56,7 +88,20 @@ visible={true}
           
         </div>
       </div>
-      <div className="col-md-9">
+      <div className="col-md-9 position-relative">
+        {console.log(data?.data.data)}
+      <button onClick={(e)=>{togglingWishList(data?.data.data.id,e)}} className='wish position-absolute top-0 end-0 border-0'><i class="position-absolute top-0 end-0 fa-regular fa-heart"></i>{wishListProduct?.map((e)=>{
+                   
+                   if(e.id===data?.data.data.id){
+                      return <i class="fa-solid fa-heart position-absolute top-0 end-0" style={{color: "#f90612"}}></i>
+                    }
+                    else{
+                     
+                    return ''
+                    }
+                    
+                  })}
+                  </button>
         <h4 >{data?.data.data.title}</h4>
         <p >{data?.data.data.description}</p>
         <p >price : {data?.data.data.price} EGP</p>

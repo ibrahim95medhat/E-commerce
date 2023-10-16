@@ -8,19 +8,38 @@ import CategorySlider from '../CategorySlider/CategorySlider'
 import  { addToCartContext } from '../AddToCart/AddToCart';
 import toast from 'react-hot-toast';
 import {FallingLines} from 'react-loader-spinner';
-import {Helmet} from 'react-helmet'
+import {Helmet} from 'react-helmet';
+
 export default function Products() {
 
 
-async function addToWhishList(id){
-  const Id={productId:id}
-const res=await axios.post('https://ecommerce.routemisr.com/api/v1/wishlist',Id,{
-  headers:{token:localStorage.getItem("token")}
-})
-console.log(res)
+
+const[wishListProduct,setWishListProduct]=useState(null)
+
+function togglingWishList(id,e){
+e.target.classList.contains('fa-solid') ? removingFromWishList(id) : addingToWishList(id)
+
 }
 
-  const {addToCart}=useContext(addToCartContext);
+
+async function removingFromWishList(id){
+ const data=await removeFromWishList(id)
+ 
+ toast(data.message)
+  getWishList()
+}
+async function addingToWishList(id){
+  
+
+const data=await addToWhishList(id)
+
+    toast(data.message)
+    getWishList()
+  
+}
+
+
+  const {addToCart,gettingWishList,removeFromWishList,addToWhishList}=useContext(addToCartContext);
   console.log(addToCart)
   
 const[isSending,setIsSending]=useState(false)
@@ -42,21 +61,24 @@ e.target.classList.add("clicked")
   function getProducts(){ 
     return  axios.get("https://ecommerce.routemisr.com/api/v1/products");
   }
-//   async function getProducts(){
-//     const {data:{data}} = await axios.get('https://ecommerce.routemisr.com/api/v1/products');
-//     console.log(data);
-//     setProdcuts(data)
-//    }
 
-// const[products,setProdcuts]=useState(null)
-
-// useEffect(()=>{
-//   getProducts()
-// },[])
 
 const {isError,isLoading,isFetching,data,refetch}=useQuery(['allProducts'],getProducts,{
 
 })
+
+async function getWishList(){
+
+  const{data}= await gettingWishList()
+setWishListProduct(data)
+console.log(wishListProduct)
+}
+
+useEffect(()=>{
+  getWishList()
+},[])
+
+
 console.log(isLoading,'isloading')
 console.log(isFetching,'isfetching')
 if(isLoading)
@@ -113,11 +135,24 @@ visible={true}
         <p>{product.price}EGP</p>
         <p><i className="fa-solid fa-star"></i>{product.ratingsAverage}</p>
         </div>
-        
+        {/* addToWhishList(product.id,e) */}
                   </Link>
                   
-                  <button onClick={()=>{addToWhishList(product.id)}} className='position-absolute top-0 end-0 border-0'><i className="fa-regular fa-heart"></i></button>
+                  <button onClick={(e)=>{togglingWishList(product.id,e)}} className='wish position-absolute top-0 end-0 border-0'><i class="position-absolute top-0 end-0 fa-regular fa-heart"></i>{wishListProduct?.map((e)=>{
+                   
+                   if(e.id===product.id){
+                      return <i class="fa-solid fa-heart position-absolute top-0 end-0" style={{color: "#f90612"}}></i>
+                    }
+                    else{
+                     
+                    return ''
+                    }
+                    
+                  })}
+                  </button>
                   <button   onClick={(e)=>{addingProduct(product.id,e)}} className='btn btn-success w-100'>+ add to cart </button>
+               
+                  
                   </div>
                 })
             }

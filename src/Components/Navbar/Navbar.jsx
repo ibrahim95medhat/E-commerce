@@ -50,6 +50,9 @@ export default function Navbar() {
        <li className="nav-item">
          <Link className="nav-link" to="allorders">All Orders</Link>
        </li>
+       <li className="nav-item">
+         <Link className="nav-link" to="wishlist">WishList</Link>
+       </li>
        
        
      </ul> : null
