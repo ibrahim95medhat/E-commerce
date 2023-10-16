@@ -1,12 +1,14 @@
-import React, { useEffect , useState } from 'react'
+import React, { useContext, useEffect , useState } from 'react'
 import axios from 'axios';
 import {Oval} from 'react-loader-spinner'
+import toast from 'react-hot-toast';
+import {addToCartContext} from '../AddToCart/AddToCart'
 export default function WishList() {
 
 const [wishlistproduct,setWishListProduct]=useState(null);
 const [isInWishList,setIsInWishList]=useState(null)
 
-
+const {addToCart}=useContext(addToCartContext)
 async function gettingWishList(){
 try {
   const {data}= await axios.get('https://ecommerce.routemisr.com/api/v1/wishlist',{
@@ -20,6 +22,12 @@ try {
 }
 }
 
+async function addingProductToCart(id){
+
+  const res=await addToCart(id);
+  console.log(res)
+  res.status==='success'? toast.success(res.message,{duration:2000}):toast.error(res.message);
+}
 
 useEffect(()=>{
 
@@ -61,6 +69,7 @@ if(wishlistproduct===null){
         <p>{e.price}EGP</p>
         <p><i className="fa-solid fa-star"></i>{e.ratingsAverage}</p>
         </div>
+        <button   onClick={()=>{addingProductToCart(e.id)}} className='btn btn-success w-100'>+ add to cart </button>
               </div>
             })
           }

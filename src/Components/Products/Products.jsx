@@ -15,6 +15,12 @@ export default function Products() {
 
 
 const[wishListProduct,setWishListProduct]=useState(null)
+const {addToCart,gettingWishList,removeFromWishList,addToWhishList}=useContext(addToCartContext);
+const[isSending,setIsSending]=useState(false)
+const {isError,isLoading,isFetching,data,refetch}=useQuery(['allProducts'],getProducts,{
+
+})
+
 
 function togglingWishList(id,e){
 e.target.classList.contains('fa-solid') ? removingFromWishList(id) : addingToWishList(id)
@@ -33,21 +39,16 @@ async function addingToWishList(id){
 
 const data=await addToWhishList(id)
 
-    toast(data.message)
+    toast.success(data.message)
     getWishList()
   
 }
 
 
-  const {addToCart,gettingWishList,removeFromWishList,addToWhishList}=useContext(addToCartContext);
-  console.log(addToCart)
-  
-const[isSending,setIsSending]=useState(false)
-
+ 
 
  async function addingProduct(id,e){
-  
-
+console.log(id)
   setIsSending(true)
 let res=await addToCart(id);
 console.log(res)
@@ -63,9 +64,6 @@ e.target.classList.add("clicked")
   }
 
 
-const {isError,isLoading,isFetching,data,refetch}=useQuery(['allProducts'],getProducts,{
-
-})
 
 async function getWishList(){
 
@@ -78,9 +76,6 @@ useEffect(()=>{
   getWishList()
 },[])
 
-
-console.log(isLoading,'isloading')
-console.log(isFetching,'isfetching')
 if(isLoading)
 {
   return  <div className=' d-flex vh-100 justify-content-center align-items-center '>
@@ -121,24 +116,23 @@ visible={true}
 </div>
 <CategorySlider/>
       
-    <div className="row g-2">
+    <div className="row g-4">
       
             {
                  data?.data.data.map((product,index)=>{
-                  return     <div className="col-md-2 position-relative" key={index}>
+                  return    <div className="col-md-3 position-relative product p-3" key={index}>
                     
                   <Link className='text-decoration-none text-black' to={`/products/${product.id}`}>
-                    <div className="image-container"><img className='w-100' src={product.imageCover} alt='pic'></img></div>
+                    <div className="image-container rounded rounded-4 overflow-hidden"><img className='w-100' src={product.imageCover} alt='pic'></img></div>
         <h5>{product.category.name}</h5>
         <h6>{product.title.split(" ").splice(0,2).join(" ")+'...'}</h6>
         <div className='d-flex justify-content-between'>
         <p>{product.price}EGP</p>
-        <p><i className="fa-solid fa-star"></i>{product.ratingsAverage}</p>
+        <p><i className="fa-solid fa-star rating-color"></i>{product.ratingsAverage}</p>
         </div>
-        {/* addToWhishList(product.id,e) */}
                   </Link>
-                  
-                  <button onClick={(e)=>{togglingWishList(product.id,e)}} className='wish position-absolute top-0 end-0 border-0'><i class="position-absolute top-0 end-0 fa-regular fa-heart"></i>{wishListProduct?.map((e)=>{
+               
+                  <button onClick={(e)=>{togglingWishList(product.id,e)}} className='wish position-absolute top-0 end-0 border-0 m-2'><i class="position-absolute top-0 end-0 fa-regular fa-heart"></i>{wishListProduct?.map((e)=>{
                    
                    if(e.id===product.id){
                       return <i class="fa-solid fa-heart position-absolute top-0 end-0" style={{color: "#f90612"}}></i>
@@ -150,7 +144,8 @@ visible={true}
                     
                   })}
                   </button>
-                  <button   onClick={(e)=>{addingProduct(product.id,e)}} className='btn btn-success w-100'>+ add to cart </button>
+                  
+                  <button onClick={(e)=>{addingProduct(product.id,e)}} className='btn btn-success w-100'>+ add to cart </button>
                
                   
                   </div>

@@ -19,8 +19,8 @@ const settings = {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 7,
-    slidesToScroll: 5,
+    slidesToShow: 2,
+    slidesToScroll: 2,
   };
 
 
@@ -43,16 +43,19 @@ if(isLoading){
 }
 
   return (
-    <div className='container'>
+    <div className='container my-5'>
 
 <div>
         <h2> Single Item</h2>
         <Slider {...settings}>
           
             {data?.data.data.map((category,index)=>{
-                return <div key={index}>
-                    <img src={category.image} alt='catSlider' style={{height:'100px',width:'100%'}}></img>
-                    <p className='text-center'>{category.name}</p>
+                return <div className='w-75 cursor-pointer' key={index}>
+                  <div className="image-cont ">
+                  <img className='w-100 ' src={category.image} alt='catSlider' ></img>
+                  </div>
+                    
+                    <p className='text-center'>{category.name.split(' ').splice(0,1).join(' ')}</p>
                 </div>
             })}
           

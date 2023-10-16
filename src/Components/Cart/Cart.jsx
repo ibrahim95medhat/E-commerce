@@ -72,21 +72,21 @@ console.log(cartProducts)
       console.log(product)
       return <div key={index} className="col-sm-12 p-5 mb-1" style={{background:'#eee'}}>
         
-      <div className="product-cont d-flex justify-content-between align-items-center">
-    <div className="product-details d-flex align-items-center ">
-      <div className="image-cont w-25 me-3 ">
+      <div className="product-cont row">
+    <div className="product-details col-sm-12 col-md-6 d-flex align-items-center ">
+      <div className="image-cont me-3 rounded rounded-4 overflow-hidden">
       <img src={product.product.imageCover} alt='pic' className='w-100'></img>
       </div>
-      <div className="details">
-        <p>{product.product.title}</p>
+      <div className="details font-sm ">
+        <p>{product.product.title.split(' ').splice(0,2).join(' ')}</p>
         <p>price: {product.price}</p>
-        <button onClick={()=>{clearCartItem(product.product.id)}} className='btn btn-danger ps-1'><span className='pe-2'>Remove</span><i className="fa-solid fa-trash"></i></button>
+        <button onClick={()=>{clearCartItem(product.product.id)}} className='btn btn-danger ps-1 font-sm'><span className='pe-2'>Remove</span><i className="fa-solid fa-trash"></i></button>
       </div>
     </div>
-    <div className="product-counter d-flex justify-content-around align-items-center">
-      <button onClick={()=>{increment(product.count,product.product.id)}} className='btn btn-success'>+</button>
+    <div className="product-counter py-3 col-sm-12 col-md-6 d-flex justify-content-center align-items-center">
+      <button onClick={()=>{increment(product.count,product.product.id)}} className='btn btn-success mx-2'>+</button>
       <p className='mx-3'>{product.count}</p>
-      <button onClick={()=>{decrement(product.count,product.product.id)}} className='btn btn-success'>-</button>
+      <button onClick={()=>{decrement(product.count,product.product.id)}} className='btn btn-success mx-2'>-</button>
     </div>
       </div>
     </div>

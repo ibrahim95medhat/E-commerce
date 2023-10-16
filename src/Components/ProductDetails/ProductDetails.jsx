@@ -45,7 +45,7 @@ function togglingWishList(id,e){
    
    const data=await addToWhishList(id)
    
-       toast(data.message)
+       toast.success(data.message)
        getWishList()
      
    }
