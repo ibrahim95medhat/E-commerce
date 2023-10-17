@@ -8,7 +8,7 @@ export default function WishList() {
 const [wishlistproduct,setWishListProduct]=useState(null);
 const [isInWishList,setIsInWishList]=useState(null)
 
-const {addToCart}=useContext(addToCartContext)
+const {addToCart,removeFromWishList}=useContext(addToCartContext)
 async function gettingWishList(){
 try {
   const {data}= await axios.get('https://ecommerce.routemisr.com/api/v1/wishlist',{
@@ -29,6 +29,11 @@ async function addingProductToCart(id){
   res.status==='success'? toast.success(res.message,{duration:2000}):toast.error(res.message);
 }
 
+async function removingProductFromWishList(id){
+ const res= await removeFromWishList(id);
+ console.log(res);
+ gettingWishList()
+}
 useEffect(()=>{
 
 gettingWishList()
@@ -69,6 +74,7 @@ if(wishlistproduct===null){
         <p>{e.price}EGP</p>
         <p><i className="fa-solid fa-star rating-color"></i>{e.ratingsAverage}</p>
         </div>
+       <div className='text-center my-3'><button onClick={()=>{removingProductFromWishList(e.id)}} className='btn btn-danger'>remove</button></div> 
         <button   onClick={()=>{addingProductToCart(e.id)}} className='btn btn-success w-100'>+ add to cart </button>
               </div>
             })

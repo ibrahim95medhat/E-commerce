@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { useContext } from 'react'
 import { addToCartContext } from '../AddToCart/AddToCart';
@@ -7,12 +7,14 @@ import {TailSpin} from 'react-loader-spinner'
 import ClearCart from '../ClearCart/ClearCart';
 import {Helmet} from 'react-helmet' 
 export default function Cart() {
-  const {cartTotalPrice,cartProducts,clearCartItem,updateCartItem,removeCart}=useContext(addToCartContext);
+  const {cartTotalPrice,cartProducts,clearCartItem,updateCartItem,removeCart,getCartProducts}=useContext(addToCartContext);
 const navigate=useNavigate();
 function payment (){
   navigate('/payment')
 }
-
+useEffect(()=>{
+  getCartProducts()
+},[])
 async function increment(count,id){
   count++
   await updateCartItem(count,id);
@@ -53,7 +55,7 @@ console.log(cartProducts)
     </>
   }
   if(cartProducts.length===0){
-    return <h1>no products in cart</h1>
+    return <h1 className='text-center'>no products in cart</h1>
   }
   return (
     <div className='container my-5 ' > 

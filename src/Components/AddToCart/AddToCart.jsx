@@ -97,6 +97,9 @@ async function getCartProducts(){
         
       
     } catch (error) {
+      setCartNumOfItems(0)
+      setCartTotalPrice(0)
+      setCartProducts([])
         console.log(error)
         // setCartNumOfItems(0)
         // setCartTotalPrice(0)
