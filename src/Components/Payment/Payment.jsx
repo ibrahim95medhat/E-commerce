@@ -35,11 +35,13 @@ async function confirmCash (shippingAddress){
  
 }
 async function confirmOnline(shippingAddress){
-
+let host=window.location.host;
+console.log(host)
+// 'http://localhost:3000'
 try {
   const {data:{session:{url}}}=await axios.post(`https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartId}`,{shippingAddress},{
   headers:{token:localStorage.getItem("token")},
-  params:{url:'http://localhost:3000'}
+  params:{url:`http://${host}`}
 })
 toast('order done successfully online payment');
 removeCart()

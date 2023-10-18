@@ -51,7 +51,7 @@ const data=await addToWhishList(id)
 console.log(id)
   setIsSending(true)
 let res=await addToCart(id);
-console.log(res)
+
 res.status==='success'? toast.success(res.message,{duration:2000}):toast.error(res.message);
 setIsSending(false);
 console.log(e);
