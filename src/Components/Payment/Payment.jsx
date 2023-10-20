@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 export default function Payment() {
 const {cartId,removeCart}=useContext(addToCartContext);
 
-
+console.log(cartId)
 const [flag,setFlag]=useState(0)
 async function cashOrOnlineFn(shippingAddress){
 
@@ -41,18 +41,15 @@ console.log(host)
 try {
   const {data:{session:{url}}}=await axios.post(`https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartId}`,{shippingAddress},{
   headers:{token:localStorage.getItem("token")},
-  params:{url:`http://${host}`}
+  params:{url:`http://${host}//E-commerce/#`}
 })
-toast('order done successfully online payment');
+toast.success('order done successfully online payment',{duration: 400,});
 removeCart()
 console.log(url)
 window.open(url,'_blank')
 } catch (error) {
   console.log(error)
 }
-
-
-
 
 }
 
