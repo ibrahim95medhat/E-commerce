@@ -10,6 +10,7 @@ export default function AllOrders() {
 
 useEffect( ()=>{
     const {id} = jwt_decode(localStorage.getItem('token'));
+    console.log(id)
     getAllOrders(id)
 },[])
 async function getAllOrders(id){

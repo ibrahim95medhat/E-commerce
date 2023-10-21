@@ -40,7 +40,7 @@ export default function Categories() {
         </Helmet>
          <div className="row">
            {cat.map((eachCat)=>{
-             return <div className="col-12 col-sm-6 col-md-4">
+             return <div className="col-12 col-sm-6 col-md-4 product">
                <div className="image-container mb-2">
                  <img className='w-100' src={eachCat.image} alt='brand-img'></img>
                </div>

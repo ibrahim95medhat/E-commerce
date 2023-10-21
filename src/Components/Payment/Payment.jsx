@@ -3,14 +3,14 @@ import { useFormik } from 'formik'
 import React, { useContext, useEffect, useState } from 'react'
 import { addToCartContext } from '../AddToCart/AddToCart'
 import toast, { Toaster } from 'react-hot-toast'
-import { Link } from 'react-router-dom'
+import { Link,  useNavigate } from 'react-router-dom'
 export default function Payment() {
 const {cartId,removeCart}=useContext(addToCartContext);
-
+const navigate=useNavigate();
 console.log(cartId)
 const [flag,setFlag]=useState(0)
 async function cashOrOnlineFn(shippingAddress){
-
+console.log(shippingAddress)
 // flag===0 ? console.log('cash') : console.log('online')
 
   flag===0?confirmCash(shippingAddress):confirmOnline(shippingAddress);
@@ -28,12 +28,13 @@ function clearInputs(){
 async function confirmCash (shippingAddress){
     console.log(shippingAddress)
     try {
-        let response=  await axios.post(`https://ecommerce.routemisr.com/api/v1/orders/${cartId}`, shippingAddress ,{
+        let response=  await axios.post(`https://ecommerce.routemisr.com/api/v1/orders/${cartId}`, {shippingAddress} ,{
             headers:{token:localStorage.getItem('token')}
         })
         toast('order done successfully in cash');
         clearInputs()
         removeCart()
+        navigate('/allorders')
         console.log(response)
     } catch (error) {
         console.log(error)
@@ -42,12 +43,11 @@ async function confirmCash (shippingAddress){
 }
 async function confirmOnline(shippingAddress){
 let host=window.location.host;
-console.log(host)
-// 'http://localhost:3000'
+
 try {
   const {data:{session:{url}}}=await axios.post(`https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartId}`,{shippingAddress},{
   headers:{token:localStorage.getItem("token")},
-  params:{url:`http://${host}//E-commerce/#`}
+  params:{url:`http://${host}//E-commerce/#`},
 })
 toast.success('order done successfully online payment',{duration: 400,});
 clearInputs()

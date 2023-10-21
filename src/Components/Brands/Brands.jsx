@@ -38,8 +38,8 @@ if(brands===null){
         </Helmet>
         <div className="row">
           {brands.map((eachBrand)=>{
-            return <div className="col-12 col-sm-6 col-md-4">
-              <div className="image-container mb-2">
+            return <div className="col-12 col-sm-6 col-md-4 product">
+              <div className="image-container mb-2 ">
                 <img className='w-100' src={eachBrand.image} alt='brand-img'></img>
               </div>
             
