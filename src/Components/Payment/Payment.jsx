@@ -16,6 +16,11 @@ async function cashOrOnlineFn(shippingAddress){
   flag===0?confirmCash(shippingAddress):confirmOnline(shippingAddress);
 }
 
+function clearInputs(){
+  document.querySelector('#details').value='';
+  document.querySelector('#phone').value='';
+  document.querySelector('#city').value='';
+}
 // useEffect(()=>{
 
 // },[])
@@ -27,6 +32,7 @@ async function confirmCash (shippingAddress){
             headers:{token:localStorage.getItem('token')}
         })
         toast('order done successfully in cash');
+        clearInputs()
         removeCart()
         console.log(response)
     } catch (error) {
@@ -44,8 +50,10 @@ try {
   params:{url:`http://${host}//E-commerce/#`}
 })
 toast.success('order done successfully online payment',{duration: 400,});
+clearInputs()
 removeCart()
 console.log(url)
+
 window.open(url,'_blank')
 } catch (error) {
   console.log(error)
@@ -71,7 +79,7 @@ window.open(url,'_blank')
   return (
     <div>
       <div className="container">
-        <form onSubmit={formik.handleSubmit}>
+        <form className='payment-details' onSubmit={formik.handleSubmit}>
             <label htmlFor='details'>details</label>
             <input name='details' id='details' type='text'  onChange={formik.handleChange} className='form-control' placeholder='details'></input>
            
