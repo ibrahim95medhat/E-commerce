@@ -20,6 +20,9 @@ import Payment from './Components/Payment/Payment.jsx';
 import AllOrders from './Components/AllOrders/AllOrders';
 import {Offline} from 'react-detect-offline'
 import WishList from './Components/WishList/WishList';
+import ForgotPassword from './Components/ForgotPassword/ForgotPassword';
+import VerifyResetPassword from './Components/VerifyResetPassword/VerifyResetPassword';
+import ResetPassword from './Components/ResetPassword/ResetPassword';
 let routers=createHashRouter([
   
   {path:'' , element:<Layout/> , children:[
@@ -34,6 +37,9 @@ let routers=createHashRouter([
   {path:'allorders', element:<ProtectedRoute><AllOrders/></ProtectedRoute>},
   {path:'wishlist', element:<ProtectedRoute><WishList/></ProtectedRoute>},
   {path:'login', element:<Login/>},
+  {path:'forgotpassword', element:<ForgotPassword/>},
+  {path:'verifyresetpassword', element:<VerifyResetPassword/>},
+  {path:'resetPassword', element:<ResetPassword/>},
   {path:'brands', element:<ProtectedRoute><Brands/></ProtectedRoute>},
  
   {path:'*', element:<Notfound/>},

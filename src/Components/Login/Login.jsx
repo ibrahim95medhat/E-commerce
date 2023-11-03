@@ -1,6 +1,6 @@
 
 import React, { useContext, useState } from 'react'
-import {useNavigate} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import {Formik,useFormik} from 'formik'
 import axios from 'axios';
 import { UserContext } from '../Context/Authentication';
@@ -73,6 +73,10 @@ let formik = useFormik({
    
     <label htmlFor='password'>password</label>
     <input className='form-control mb-3' onBlur={formik.handleBlur} values={formik.values.password} onChange={formik.handleChange} type='password' name='password' id='password' />
+    
+    <Link className='text-decoration-none'  to='/forgotpassword'>Forgot your password ?</Link>
+
+   
     {formik.touched.password && formik.errors.password ? <div className='error-msg alert alert-danger p-2 rounded-2 '><p>{formik.errors.password}</p></div>:true}
     
     
